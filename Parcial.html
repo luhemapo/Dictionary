@@ -34,10 +34,16 @@
             </p>
             <button id="Consult" class="btn btn-success" type="Consult">Consult</button> <br><br>
             <h2>Meanings</h2>
-            <p><textarea id="textarea" readonly class="form-control"placeholder="" cols="40" rows="5"></textarea></p>
+            <p><textarea id="mning" readonly class="form-control"placeholder="" cols="40" rows="5"></textarea></p>
+
+            <h2>Example</h2>
+            <p><textarea id="exampl" readonly class="form-control"placeholder="" cols="40" rows="5"></textarea></p>
+
+            <h2>Part Of Speech</h2>
+            <p><textarea id="partOfSpeech" readonly class="form-control"placeholder="" cols="40" rows="5"></textarea></p>
     </html>
     <script>
-        $(document).ready(function(){
+         $(document).ready(function(){
            $('#Consult').click(function(){
             let word = document.getElementById("word").value;
           //  var definition = 'https://api.dictionaryapi.dev/api/v2/entries/en/'+word;
@@ -45,17 +51,24 @@
             .then(response => response.json())
             .then(data => {
                 if(data.title=="No Definitions Found"){
-                text=data.message;
+                  mning_text=data.message;
+                  exampl_text=data.message;
                 }else{
-                var tam=data[0].meanings.length;
-                var text="";
-                for (var i = 0; i < tam ; i++) {
-                    text=text+(i+1)+". "+" "+data[0].meanings[i].definitions[0].definition+"\n"
+                var mning_size=data[0].meanings.length;
+                var mning_text="";
+
+                var exampl_size=data[0].meanings.length;
+                var exampl_text="";
+
+                for (var i = 0; i < mning_size ; i++) {
+                  mning_text=mning_text+(i+1)+". "+" "+data[0].meanings[i].definitions[0].definition+"\n"
+                }
+                for (var i = 0; i < exampl_size ; i++) {
+                  exampl_text=exampl_text+(i+1)+". "+" "+data[0].meanings[i].definitions[0].example+"\n"
                 }
             }
-            document.getElementById("textarea").setAttribute("placeholder" , text);
-
-            
+            document.getElementById("mning").setAttribute("placeholder" , mning_text);
+            document.getElementById("exampl").setAttribute("placeholder" , exampl_text);
             
             });
         });
