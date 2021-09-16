@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>DICTIONARY</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--- <script src="extensions/editable/bootstrap-table-editable.js"></script> --->
+
+<!------------------------------------- AQUI EMPIEZA COMO TAL EL PROGRAMA --------------------------------->    
+    <div class="container">
+        <h2>Welcome to your Dictionary</h2>
+        <form onsubmit="return false">
+            <!-- Tipo de ordenamiento de los campos-->
+           <div class="form-group">
+            <p>
+              <!-- Label y espacio para el nombre del dueño-->
+              <label>Type a word</label> <br>
+              <input id="word" class="form-control" type="text" required="required">   
+            </p>
+            <button id="Consult" class="btn btn-success" type="Consult">Consult</button> <br><br>
+            <h2>Meanings</h2>
+            <p><textarea id="textarea" readonly class="form-control"placeholder="" cols="40" rows="5"></textarea></p>
+    </html>
+    <script>
+        $(document).ready(function(){
+           $('#Consult').click(function(){
+            let word = document.getElementById("word").value;
+          //  var definition = 'https://api.dictionaryapi.dev/api/v2/entries/en/'+word;
+            fetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+word)
+            .then(response => response.json())
+            .then(data => {
+                if(data.title=="No Definitions Found"){
+                text=data.message;
+                }else{
+                var tam=data[0].meanings.length;
+                var text="";
+                for (var i = 0; i < tam ; i++) {
+                    text=text+(i+1)+". "+" "+data[0].meanings[i].definitions[0].definition+"\n"
+                }
+            }
+            document.getElementById("textarea").setAttribute("placeholder" , text);
+
+            
+            
+            });
+        });
+    })     
+    </script>
