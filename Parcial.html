@@ -28,11 +28,12 @@
             <!-- Tipo de ordenamiento de los campos-->
            <div class="form-group">
             <p>
-              <!-- Label y espacio para el nombre del dueño-->
+              <!-- Label y espacio para el nombre del dueÃ±o-->
               <label>Type a word</label> <br>
               <input id="word" class="form-control" type="text" required="required">   
             </p>
-            <button id="Consult" class="btn btn-success" type="submit">Consult</button> <br><br>
+            <button id="Consult" class="btn btn-success" type="Consult">Consult</button>
+            <button id="Other" class="btn btn-success " type="Other">Reset</button> <br><br>
             <h2>Meanings</h2>
             <p><textarea id="mning" readonly class="form-control"placeholder="" cols="40" rows="5"></textarea></p>
 
@@ -47,7 +48,7 @@
     <script>
          $(document).ready(function(){
            $('#Consult').click(function(){
-            
+            $('#Consult').attr("disabled", true);//desabilita boton
             let word = document.getElementById("word").value;
         
             fetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+word)
@@ -85,6 +86,12 @@
             
             });
         });
+
+      $('#Other').click(function(){
+        window.location.reload();
+      });
+
+
     })     
     
     </script>
