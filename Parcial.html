@@ -33,7 +33,7 @@
               <input id="word" class="form-control" type="text" required="required">   
             </p>
             <button id="Consult" class="btn btn-success" type="Consult">Consult</button>
-            <button id="Other" class="btn btn-success " type="Other">Reset</button> <br><br>
+            <button id="Other" class="btn btn-success " type="Other">Type Other Word</button> <br><br>
             <h2>Meanings</h2>
             <p><textarea id="mning" readonly class="form-control"placeholder="" cols="40" rows="5"></textarea></p>
 
@@ -61,7 +61,6 @@
                 var size=data[0].meanings.length;
                 var mning_text="";
                 var exampl_text="";
-               // var partOfSpeech_size=data[1].meanings.length;
                 var partOfSpeech_text="";
                 var speech ="https:"+data[0].phonetics[0].audio;
                 
@@ -72,14 +71,16 @@
                 for (var i = 0; i < size ; i++) {
                   exampl_text=exampl_text+(i+1)+". "+" "+data[0].meanings[i].definitions[0].example+"\n"
                 }
-                //for (var i = 0; i < partOfSpeech_size ; i++) {
-                  //partOfSpeech_text=partOfSpeech_text+(i+1)+". "+" "+data[i].meanings[1].definitions[0].definition+"\n"
-                //}
+                for (var i = 0; i < size ; i++) {
+                  partOfSpeech_text=partOfSpeech_text+(i+1)+". "+data[0].meanings[i].partOfSpeech+"\n"
+                }
             }
             document.getElementById("mning").setAttribute("placeholder" , mning_text);
             document.getElementById("exampl").setAttribute("placeholder" , exampl_text);
-            //document.getElementById("partOfSpeech").setAttribute("placeholder" , partOfSpeech_text);
+            document.getElementById("partOfSpeech").setAttribute("placeholder" , partOfSpeech_text);
+
             var sonido = document.createElement("iframe");
+            
             sonido.setAttribute("src",speech);
             document.body.appendChild(sonido);
             document.getElementById("play").removeEventListener("click",sonarPajaros);
